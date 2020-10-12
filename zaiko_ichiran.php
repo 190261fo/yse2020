@@ -125,14 +125,14 @@ session_start();
 							while($extract = $result->fetch_assoc()){
 								//⑪extract変数を使用し、1レコードのデータを渡す。
 	
-								echo "<tr id='book'>";
-									echo "<td id='check'><input type='checkbox' name='books[]'value=''></td>";
-									echo "<td id='id'>"."{$extract['id']}"."</td>";
-									echo "<td id='title'>"."{$extract['title']}"."</td>";
-									echo "<td id='author'>"."{$extract['author']}"."</td>";
-									echo "<td id='date'>"."{$extract['salesDate']}"."</td>";
-									echo "<td id='price'>"."{$extract['price']}"."</td>";
-									echo "<td id='stock'>"."{$extract['stock']}"."</td>";
+								echo "<tr>";
+									echo "<td><input type='checkbox' name='books[]'value=''></td>";
+									echo "<td>"."{$extract['id']}"."</td>";
+									echo "<td>"."{$extract['title']}"."</td>";
+									echo "<td>"."{$extract['author']}"."</td>";
+									echo "<td>"."{$extract['salesDate']}"."</td>";
+									echo "<td>"."{$extract['price']}"."</td>";
+									echo "<td>"."{$extract['stock']}"."</td>";
 								echo "</tr>";
 							}
 	
