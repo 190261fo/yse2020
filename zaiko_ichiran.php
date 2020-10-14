@@ -130,7 +130,6 @@ session_start();
 									echo "<td>"."{$extract['stock']}"."</td>";
 								echo "</tr>";
 							}
-	
 							
 						}
 						?>
