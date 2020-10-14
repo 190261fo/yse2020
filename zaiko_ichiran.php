@@ -41,27 +41,22 @@ session_start();
 	//⑤データベースへ接続し、接続情報を変数に保存する
 	$db_name = 'zaiko2020_yse';
     $host = 'localhost';
-    $user_name = 'root';
-    $password = '';
+    $user_name = 'zaiko2020_yse';
+    $password = '2020zaiko';
     $mysqli = new mysqli($host, $user_name, $password, $db_name);
  
     if($mysqli->connect_error){
         echo $mysqli->connect_error;
         exit();
     }else{
-		echo 'ok'.'<br>';
-		
 		//⑥データベースで使用する文字コードを「UTF8」にする
-
 		$mysqli->set_charset('utf8');
 
 
 		//⑦書籍テーブルから書籍情報を取得するSQLを実行する。また実行結果を変数に保存する
 		$sql = "SELECT * FROM books";
 		$result = $mysqli->query($sql);
-	}
-
-		
+	}	
 	
 //     }
 // }	
