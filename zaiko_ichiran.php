@@ -119,9 +119,9 @@ session_start();
 						if($result){
 							while($extract = $result->fetch_assoc()){
 								//⑪extract変数を使用し、1レコードのデータを渡す。
-	
+								
 								echo "<tr>";
-									echo "<td><input type='checkbox' name='books[]'value=''></td>";
+									echo "<td><input type='checkbox' name='books[]' value='{$extract['id']}'></td>";
 									echo "<td>"."{$extract['id']}"."</td>";
 									echo "<td>"."{$extract['title']}"."</td>";
 									echo "<td>"."{$extract['author']}"."</td>";
