@@ -35,6 +35,7 @@ if($mysqli->connect_error){
 	echo $mysqli->connect_error;
 	exit();
 }else{
+	
 //⑦データベースで使用する文字コードを「UTF8」にする
 	$mysqli->set_charset('utf8');
 }
