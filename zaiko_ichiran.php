@@ -57,7 +57,6 @@ session_start();
 		$sql = "SELECT * FROM books";
 		$result = $mysqli->query($sql);
 	}	
-	
 //     }
 // }	
 ?>

@@ -34,8 +34,7 @@ $mysqli = new mysqli($host, $user_name, $password, $db_name);
 if($mysqli->connect_error){
 	echo $mysqli->connect_error;
 	exit();
-}else{
-	
+}else{	
 //⑦データベースで使用する文字コードを「UTF8」にする
 	$mysqli->set_charset('utf8');
 }
