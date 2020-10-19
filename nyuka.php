@@ -122,7 +122,7 @@ function getId($id,$con){
 						// ⑯「getId」関数を呼び出し、変数に戻り値を入れる。その際引数に⑮の処理で取得した値と⑥のDBの接続情報を渡す。
 						$extract = getId($book, $mysqli);
 					?>
-						<input type="hidden" value="<?php $extract["id"]; ?>" name="books[]">
+						<input type="hidden" value="<?php echo $extract["id"]; ?>" name="books[]">
 						<tr>
 							<td><?php echo $extract["id"]; ?></td>
 							<td><?php echo $extract["title"]; ?></td>
@@ -130,7 +130,7 @@ function getId($id,$con){
 							<td><?php echo $extract["salesDate"]; ?></td>
 							<td><?php echo $extract["price"]; ?></td>
 							<td><?php echo $extract["stock"]; ?></td>
-							<td><input type='text' name='stock[]' size='5' maxlength='11' required></td>
+							<td><input type='text' name='in[]' size='5' maxlength='11' required></td>
 						</tr>
 					<?php
 					}
