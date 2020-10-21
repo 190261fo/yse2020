@@ -79,8 +79,11 @@ session_start();
 				/*
 				 * ⑧SESSIONの「success」にメッセージが設定されているかを判定する。
 				 * 設定されていた場合はif文の中に入る。
-				 */ 
-				
+				*/ 
+				if(isset($_SESSION["success"])){
+					//⑨SESSIONの「success」の中身を表示する。
+					echo $_SESSION["success"];
+				}
 				?>
 			</div>
 			
@@ -117,19 +120,18 @@ session_start();
 						//⑩SQLの実行結果の変数から1レコードのデータを取り出す。レコードがない場合はループを終了する。
 						if($result){
 							while($extract = $result->fetch_assoc()){
-								//⑪extract変数を使用し、1レコードのデータを渡す。
 								
+								//⑪extract変数を使用し、1レコードのデータを渡す。
 								echo "<tr>";
-									echo "<td><input type='checkbox' name='books[]' value='{$extract['id']}'></td>";
-									echo "<td>"."{$extract['id']}"."</td>";
-									echo "<td>"."{$extract['title']}"."</td>";
-									echo "<td>"."{$extract['author']}"."</td>";
-									echo "<td>"."{$extract['salesDate']}"."</td>";
-									echo "<td>"."{$extract['price']}"."</td>";
-									echo "<td>"."{$extract['stock']}"."</td>";
+								echo "<td><input type='checkbox' name='books[]' value='{$extract['id']}'></td>";
+								echo "<td>"."{$extract['id']}"."</td>";
+								echo "<td>"."{$extract['title']}"."</td>";
+								echo "<td>"."{$extract['author']}"."</td>";
+								echo "<td>"."{$extract['salesDate']}"."</td>";
+								echo "<td>"."{$extract['price']}"."</td>";
+								echo "<td>"."{$extract['stock']}"."</td>";
 								echo "</tr>";
 							}
-							
 						}
 						?>
 					</tbody>
