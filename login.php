@@ -11,67 +11,63 @@
 	ユーザー名かパスワードが間違っています：①IDが間違っている　②IDが正しいがパスワードが異なる
 	ログインしてください：ログインしていない状態で他のページに遷移した場合(ログイン画面に遷移し上記を表示)
 */
-//⑥セッションを開始する
 
+//⑥セッションを開始する
 session_start();
 
 //①名前とパスワードを入れる変数を初期化する
 $username = "";
 $password = "";
+$message = "";
+$errorMessage = "";
 
 /*
  * ②ログインボタンが押されたかを判定する。
  * 押されていた場合はif文の中の処理を行う
  */
 if (isset($_POST["decision"]) && $_POST["decision"] === "1") {
+
 	/* ③名前とパスワードが両方とも入力されているかを判定する。
 	 * 入力されていた場合はif文の中の処理を行う。
 	 */
-	// if (/* ③の処理を書く */) {
-
-
 	if (!empty($_POST["name"]) && !empty($_POST["pass"])) {
 
-
 		//④名前とパスワードにPOSTで送られてきた名前とパスワードを設定する
-		$username = $_POST["name"];		//xampやmampなら初期値は"root"
-		// echo $username;
+		$username = $_POST["name"];
 		$password = $_POST["pass"];
-		// echo $username;
 	} else {
 		//⑤名前かパスワードが入力されていない場合は、「名前かパスワードが未入力です」という文言をメッセージを入れる変数に設定する
-		$errorMessage = "名前かパスワードが未入力です";
-		//echo $errorMessage;
+		$message = "名前かパスワードが未入力です";
 	}
 }
 
-
-
 //⑦名前が入力されているか判定する。入力されていた場合はif文の中に入る
-
 if ($username && $password) {
+
 	//⑧名前に「yse」、パスワードに「2019」と設定されているか確認する。設定されていた場合はif文の中に入る
 	if ($username == "yse" && $password == "2019"){
+
 		//⑨SESSIONに名前を設定し、SESSIONの「login」フラグをtrueにする
 		session_name("Login");
 		$_SESSION['Login'] = true;
 
-
 		//⑩在庫一覧画面へ遷移する
 		header('Location: zaiko_ichiran.php');
-		
 	}else{
 		//⑪名前もしくはパスワードが間違っていた場合は、「ユーザー名かパスワードが間違っています」という文言をメッセージを入れる変数に設定する
-		$errorMessage = "ユーザー名かパスワードが間違っています";
-		echo $errorMessage;
+		$message = "ユーザー名かパスワードが間違っています";
 	}
 }
 
 //⑫SESSIONの「error2」に値が入っているか判定する。入っていた場合はif文の中に入る
-// if (/* ⑫の処理を書く */) {
-// 	//⑬SESSIONの「error2」の値をエラーメッセージを入れる変数に設定する。
-// 	//⑭SESSIONの「error2」にnullを入れる。
-// }
+if (isset($_SESSION["error2"])) {
+
+	//⑬SESSIONの「error2」の値をエラーメッセージを入れる変数に設定する。
+	$errorMessage = $_SESSION["error2"];
+
+	//⑭SESSIONの「error2」にnullを入れる。
+	$_SESSION["error2"] = null;
+}
 ?>
 <!DOCTYPE html>
 <html lang="ja">
