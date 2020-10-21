@@ -14,10 +14,10 @@
  * ①session_status()の結果が「PHP_SESSION_NONE」と一致するか判定する。
  * 一致した場合はif文の中に入る。
  */
-// if (session_status() == PHP_SESSION_NONE /* ①.の処理を行う */) {
-// 	//②セッションを開始する
-// 	session_start();
-// }
+if (session_status() == PHP_SESSION_NONE /* ①.の処理を行う */) {
+	//②セッションを開始する
+	session_start();
+}
 
 //③SESSIONの「login」フラグがfalseか判定する。「login」フラグがfalseの場合はif文の中に入る。
 // if (/* ③の処理を書く */){
