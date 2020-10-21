@@ -83,6 +83,7 @@ session_start();
 				if(isset($_SESSION["success"])){
 					//⑨SESSIONの「success」の中身を表示する。
 					echo $_SESSION["success"];
+					$_SESSION["success"] = null; # これないと永遠に「入荷する商品が選択されていません」が表示される
 				}
 				?>
 			</div>
