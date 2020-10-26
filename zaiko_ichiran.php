@@ -13,52 +13,34 @@
 
 //①セッションを開始する
 session_start();
-// session_regenerate_id(true);
-
-
-
-// $contact = $_POST;
-
-// $_SESSION['contact'] = $contact;
-
-//入力チェック
-// $is_error = false;
-// if ($contact['username'] === '') {
-//     $is_error = true;
-// }
-// if ($contact['password'] === '') {
-//     $is_error = true;
-// }
 
 //②SESSIONの「login」フラグがfalseか判定する。「login」フラグがfalseの場合はif文の中に入る。
-// if ($is_error){
-// 	// ③SESSIONの「error2」に「ログインしてください」と設定する。	
-	
-// 	// ④ログイン画面へ遷移する。
-// 	header("location: login.php");
-// }else{
+if($_SESSION['login']==false){
+	// ③SESSIONの「error2」に「ログインしてください」と設定する。	
+	$_SESSION["error2"] = "ログインしてください";
+	// ④ログイン画面へ遷移する。
+	header("Location: login.php");
+}
 
-	//⑤データベースへ接続し、接続情報を変数に保存する
-	$db_name = 'zaiko2020_yse';
-    $host = 'localhost';
-    $user_name = 'zaiko2020_yse';
-    $password = '2020zaiko';
-    $mysqli = new mysqli($host, $user_name, $password, $db_name);
- 
-    if($mysqli->connect_error){
-        echo $mysqli->connect_error;
-        exit();
-    }else{
-		//⑥データベースで使用する文字コードを「UTF8」にする
-		$mysqli->set_charset('utf8');
+//⑤データベースへ接続し、接続情報を変数に保存する
+$db_name = 'zaiko2020_yse';
+$host = 'localhost';
+$user_name = 'zaiko2020_yse';
+$password = '2020zaiko';
+$mysqli = new mysqli($host, $user_name, $password, $db_name);
+
+if($mysqli->connect_error){
+	echo $mysqli->connect_error;
+	exit();
+}else{
+	//⑥データベースで使用する文字コードを「UTF8」にする
+	$mysqli->set_charset('utf8');
 
 
-		//⑦書籍テーブルから書籍情報を取得するSQLを実行する。また実行結果を変数に保存する
-		$sql = "SELECT * FROM books";
-		$result = $mysqli->query($sql);
-	}	
-//     }
-// }	
+	//⑦書籍テーブルから書籍情報を取得するSQLを実行する。また実行結果を変数に保存する
+	$sql = "SELECT * FROM books";
+	$result = $mysqli->query($sql);
+}		
 ?>
 <!DOCTYPE html>
 <html lang="ja">

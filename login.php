@@ -48,8 +48,8 @@ if ($username && $password) {
 	if ($username == "yse" && $password == "2019"){
 
 		//⑨SESSIONに名前を設定し、SESSIONの「login」フラグをtrueにする
-		session_name("Login");
-		$_SESSION['Login'] = true;
+		session_name("login");
+		$_SESSION['login'] = true;
 
 		//⑩在庫一覧画面へ遷移する
 		header('Location: zaiko_ichiran.php');
@@ -84,9 +84,11 @@ if (isset($_SESSION["error2"])) {
 		<?php
 		//⑮エラーメッセージの変数に入っている値を表示する
 		// echo "<div id='error'>", /* ⑮の変数を書く */, "</div>";
+		echo "<div id='error'>$errorMessage</div>";
 
 		//⑯メッセージの変数に入っている値を表示する
 		// echo "<div id='msg'>", /* ⑯の変数を書く */, "</div>";
+		echo "<div id='msg'>$message</div>";
 		?>
 		<form action="login.php" method="post" id="log">
 			<p>
