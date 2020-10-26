@@ -94,7 +94,8 @@ foreach($_POST["books"] as $book){
 	}
 	
 	// ㉒ ⑩で宣言した変数をインクリメントで値を1増やす。
-	$book++;
+	//$book++;
+	$count++;
 }
 
 /*
