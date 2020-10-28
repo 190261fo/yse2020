@@ -98,22 +98,29 @@ foreach($_POST["books"] as $book){
 
 /*
  * ㉓POSTでこの画面のボタンの「add」に値が入ってるか確認する。
+ * 
  * 値が入っている場合は中身に「ok」が設定されていることを確認する。
  */
-// if(/* ㉓の処理を書く */){
-// 	//㉔書籍数をカウントするための変数を宣言し、値を0で初期化する。
+if(isset($_POST["add"]) && $_POST["add"] == "ok"){
+	//㉔書籍数をカウントするための変数を宣言し、値を0で初期化する。
+	$count = 0;
+	//㉕POSTの「books」から値を取得し、変数に設定する。
+	foreach(/* ㉕の処理を書く */ $_POST["books"] as $book){
+		//㉖「getByid」関数を呼び出し、変数に戻り値を入れる。その際引数に㉕の処理で取得した値と⑧のDBの接続情報を渡す。
+		$extract = getByid($book, $mysqli);
+		//㉗ ㉖で取得した書籍の情報の「stock」と、㉔の変数を元にPOSTの「stock」から値を取り出し、足した値を変数に保存する。
+		$result = $extract["stock"] - $_POST["out"][$count];
+		//㉘「updateByid」関数を呼び出す。その際に引数に㉕の処理で取得した値と⑧のDBの接続情報と㉗で計算した値を渡す。
+		updateByid($book,$mysqli,$result);
+		//㉙ ㉔で宣言した変数をインクリメントで値を1増やす。
+		$count++;
+	}
 
-// 	//㉕POSTの「books」から値を取得し、変数に設定する。
-// 	foreach(/* ㉕の処理を書く */){
-// 		//㉖「getByid」関数を呼び出し、変数に戻り値を入れる。その際引数に㉕の処理で取得した値と⑧のDBの接続情報を渡す。
-// 		//㉗ ㉖で取得した書籍の情報の「stock」と、㉔の変数を元にPOSTの「stock」から値を取り出して書籍情報の「stock」から値を引いた値を変数に保存する。
-// 		//㉘「updateByid」関数を呼び出す。その際に引数に㉕の処理で取得した値と⑧のDBの接続情報と㉗で計算した値を渡す。
-// 		//㉙ ㉔で宣言した変数をインクリメントで値を1増やす。
-// 	}
-
-// 	//㉚SESSIONの「success」に「入荷が完了しました」と設定する。
-// 	//㉛「header」関数を使用して在庫一覧画面へ遷移する。
-// }
+	//㉚SESSIONの「success」に「出荷が完了しました」と設定する。
+	$_SESSION["success"] = "出荷が完了しました";
+	//㉛「header」関数を使用して在庫一覧画面へ遷移する。
+	 header('Location: zaiko_ichiran.php');
+}
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -152,7 +159,7 @@ foreach($_POST["books"] as $book){
 						<td><?php echo $_POST["out"][$index]/* ㊲ POSTの「stock」に設定されている値を㉜の変数を使用して呼び出す。 */;?></td>
 					</tr>
 					<input type="hidden" name="books[]" value="<?php echo $extract["id"]; /* ㊳ ㉝で取得した値を設定する */?>">
-					<input type="hidden" name="stock[]" value='<?php echo $_POST["out"][$index] /* ㊴「POSTの「stock」に設定されている値を㉜の変数を使用して設定する。 */?>'>
+					<input type="hidden" name="out[]" value='<?php echo $_POST["out"][$index] /* ㊴「POSTの「stock」に設定されている値を㉜の変数を使用して設定する。 */?>'>
 					<?php
 						//㊵ ㉜で宣言した変数をインクリメントで値を1増やす。
 						$index++;
