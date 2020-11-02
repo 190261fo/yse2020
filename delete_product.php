@@ -60,7 +60,14 @@ if($mysqli->connect_error){
 	$mysqli->set_charset('utf8');
 }
 
-
+//POSTの「books」の値が空か判定する。空の場合はif文の中に入る。
+if (!isset($_POST["books"])) {
+	//SESSIONの「success」に「削除する商品が選択されていません」と設定する。
+	$_SESSION["success"] = "削除する商品が選択されていません";
+	//在庫一覧画面へ遷移する。
+	header( "Location: ./zaiko_ichiran.php" ) ;
+	exit ;
+}
 
 if(isset($_POST["delete"]) && $_POST["delete"] == "ok"){
 	
