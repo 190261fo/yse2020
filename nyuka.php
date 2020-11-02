@@ -56,7 +56,7 @@ function getId($id,$con){
 	 * その際にWHERE句でメソッドの引数の$idに一致する書籍のみ取得する。
 	 * SQLの実行結果を変数に保存する。
 	*/
-	$sql = "SELECT * FROM books WHERE id=$id";
+	$sql = "SELECT * FROM books WHERE id={$id}";
 	$result = $con->query($sql);
 
 	//⑫実行した結果から1レコード取得し、returnで値を返す。
@@ -120,7 +120,7 @@ function getId($id,$con){
 					<?php 
 					/*
 					 * ⑮POSTの「books」から一つずつ値を取り出し、変数に保存する。
-					 */
+					*/
     				// foreach(/* ⑮の処理を書く */){
 					foreach ($_POST["books"] as $book) {
 						// ⑯「getId」関数を呼び出し、変数に戻り値を入れる。その際引数に⑮の処理で取得した値と⑥のDBの接続情報を渡す。

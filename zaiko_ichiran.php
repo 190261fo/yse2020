@@ -36,7 +36,6 @@ if($mysqli->connect_error){
 	//⑥データベースで使用する文字コードを「UTF8」にする
 	$mysqli->set_charset('utf8');
 
-
 	//⑦書籍テーブルから書籍情報を取得するSQLを実行する。また実行結果を変数に保存する
 	$sql = "SELECT * FROM books";
 	$result = $mysqli->query($sql);

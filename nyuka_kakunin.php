@@ -17,9 +17,8 @@ function getByid($id,$con){
 	 * その際にWHERE句でメソッドの引数の$idに一致する書籍のみ取得する。
 	 * SQLの実行結果を変数に保存する。
 	*/
-	$sql = "SELECT * FROM books WHERE id=$id";
+	$sql = "SELECT * FROM books WHERE id={$id}";
 	$result = $con->query($sql);
-
 
 	//③実行した結果から1レコード取得し、returnで値を返す。
 	if($result){
@@ -33,7 +32,7 @@ function updateByid($id,$con,$total){
 	 * 引数で受け取った$totalの値で在庫数を上書く。
 	 * その際にWHERE句でメソッドの引数に$idに一致する書籍のみ取得する。
 	*/
-	$sql = "UPDATE books SET stock=$total WHERE id=$id";
+	$sql = "UPDATE books SET stock={$total} WHERE id={$id}";
 	$con->query($sql);
 
 }
@@ -82,9 +81,9 @@ foreach($_POST["books"] as $book){
 	}
 
 	//⑯「getByid」関数を呼び出し、変数に戻り値を入れる。その際引数に⑪の処理で取得した値と⑧のDBの接続情報を渡す。
-		$extract = getByid($book, $mysqli);
+	$extract = getByid($book, $mysqli);
 	//⑰ ⑯で取得した書籍の情報の「stock」と、⑩の変数を元にPOSTの「stock」から値を取り出し、足した値を変数に保存する。
-		$result = $extract["stock"] + $_POST["in"][$count];
+	$result = $extract["stock"] + $_POST["in"][$count];
 	//⑱ ⑰の値が100を超えているか判定する。超えていた場合はif文の中に入る。
 	if(/* ⑱の処理を行う */ $result > 100){
 		//⑲SESSIONの「error」に「最大在庫数を超える数は入力できません」と設定する。
@@ -96,14 +95,13 @@ foreach($_POST["books"] as $book){
 	}
 	
 	// ㉒ ⑩で宣言した変数をインクリメントで値を1増やす。
-	//$book++;
 	$count++;
 }
 
 /*
  * ㉓POSTでこの画面のボタンの「add」に値が入ってるか確認する。
  * 値が入っている場合は中身に「ok」が設定されていることを確認する。
- */
+*/
 if(/* ㉓の処理を書く */ isset($_POST["add"]) && $_POST["add"] == "ok"){
 	//㉔書籍数をカウントするための変数を宣言し、値を0で初期化する。
 	$count = 0;
@@ -155,7 +153,6 @@ if(/* ㉓の処理を書く */ isset($_POST["add"]) && $_POST["add"] == "ok"){
 						foreach($_POST["books"] as $book){
 							//㉞「getByid」関数を呼び出し、変数に戻り値を入れる。その際引数に㉜の処理で取得した値と⑧のDBの接続情報を渡す。
 							$extract = getByid($book, $mysqli);
-
 						?>
 						<tr>
 							<td><?php echo $extract["title"]; ?></td>

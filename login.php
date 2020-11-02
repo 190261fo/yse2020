@@ -24,12 +24,12 @@ $errorMessage = "";
 /*
  * ②ログインボタンが押されたかを判定する。
  * 押されていた場合はif文の中の処理を行う
- */
+*/
 if (isset($_POST["decision"]) && $_POST["decision"] === "1") {
 
 	/* ③名前とパスワードが両方とも入力されているかを判定する。
 	 * 入力されていた場合はif文の中の処理を行う。
-	 */
+	*/
 	if (!empty($_POST["name"]) && !empty($_POST["pass"])) {
 
 		//④名前とパスワードにPOSTで送られてきた名前とパスワードを設定する
@@ -103,5 +103,4 @@ if (isset($_SESSION["error2"])) {
 		</form>
 	</div>
 </body>
-
 </html>
