@@ -39,20 +39,20 @@ if($mysqli->connect_error){
 // 	exit ;
 // }
 
-// function getId($id,$con){
-// 	/* 
-// 	 * ⑪書籍を取得するSQLを作成する実行する。
-// 	 * その際にWHERE句でメソッドの引数の$idに一致する書籍のみ取得する。
-// 	 * SQLの実行結果を変数に保存する。
-// 	*/
-// 	$sql = "SELECT * FROM books WHERE id=$id";
-// 	$result = $con->query($sql);
+function getId($con){
+	/* 
+	 * ⑪書籍を取得するSQLを作成する実行する。
+	 * その際にWHERE句でメソッドの引数の$idに一致する書籍のみ取得する。
+	 * SQLの実行結果を変数に保存する。
+	*/
+	$sql = "SELECT * FROM books ORDER BY id DESC LIMIT 1";
+	$result = $con->query($sql);
 
-// 	//⑫実行した結果から1レコード取得し、returnで値を返す。
-// 	if($result){
-// 		return $result->fetch_assoc();
-// 	}
-// }
+	//⑫実行した結果から1レコード取得し、returnで値を返す。
+	if($result){
+		return $result->fetch_assoc();
+	}
+}
 
 ?>
 <!DOCTYPE html>
@@ -98,6 +98,7 @@ if($mysqli->connect_error){
 					<thead>
 						<tr>
 							<th id="id">ID</th>
+							<th id="isbn">ISBN</th>
 							<th id="book_name">書籍名</th>
 							<th id="author">著者名</th>
 							<th id="salesDate">発売日</th>
@@ -110,19 +111,19 @@ if($mysqli->connect_error){
 					/*
 					 * ⑮POSTの「books」から一つずつ値を取り出し、変数に保存する。
 					 */
-    				// foreach(/* ⑮の処理を書く */){
-					// foreach ($_POST["books"] as $book) {
+					// foreach (/* ⑮の処理を書く */ $_POST["books"] as $book) {
 					// 	// ⑯「getId」関数を呼び出し、変数に戻り値を入れる。その際引数に⑮の処理で取得した値と⑥のDBの接続情報を渡す。
-					// 	$extract = getId($book, $mysqli);
+						$extract = getId($mysqli);
 					?>
-						<!-- <input type="hidden" value="<?php echo $extract["id"]; ?>" name="books[]"> -->
+						<input type="hidden" value="<?php echo $extract["id"]; ?>" name="books[]">
 						<tr>
-							<td><input type='text' name='id' size='4' maxlength='11' required></td>
+							<td><?PHP echo $extract['id'] + 1; ?></td>
+							<td><input type='text' name='isbn' size='13' maxlength='13' required></td>
 							<td><input type='text' name='title' size='20' maxlength='40' required></td>
 							<td><input type='text' name='author' size='15' maxlength='30' required></td>
-							<td><input type='text' name='salesDate' size='8' maxlength='20' required></td>
+							<td><input type='date' name='salesDate' required></td>
 							<td><input type='text' name='price' size='8' maxlength='11' required></td>
-							<td><input type='text' name='stock' size='3' maxlength='11' required></td>
+							<td>0</td>
 							<td><input type='text' name='in[]' size='3' maxlength='11' required></td>
 						</tr>
 					<?php
