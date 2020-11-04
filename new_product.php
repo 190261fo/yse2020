@@ -30,21 +30,8 @@ if($mysqli->connect_error){
 //⑦データベースで使用する文字コードを「UTF8」にする
 	$mysqli->set_charset('utf8');
 }
-// //⑧POSTの「books」の値が空か判定する。空の場合はif文の中に入る。
-// if (!isset($_POST["books"])) {
-// 	//⑨SESSIONの「success」に「入荷する商品が選択されていません」と設定する。
-// 	$_SESSION["success"] = "入荷する商品が選択されていません";
-// 	//⑩在庫一覧画面へ遷移する。
-// 	header( "Location: ./zaiko_ichiran.php" ) ;
-// 	exit ;
-// }
 
 function getId($con){
-	/* 
-	 * ⑪書籍を取得するSQLを作成する実行する。
-	 * その際にWHERE句でメソッドの引数の$idに一致する書籍のみ取得する。
-	 * SQLの実行結果を変数に保存する。
-	*/
 	$sql = "SELECT * FROM books ORDER BY id DESC LIMIT 1";
 	$result = $con->query($sql);
 
@@ -54,6 +41,30 @@ function getId($con){
 	}
 }
 
+function addData($con){
+	// 入力値を変数に
+	$title = $_POST["title"];
+	$author = $_POST["author"];
+	$salesDate = date('Y年m月d日', strtotime($_POST["salesDate"]));
+	$isbn = $_POST["isbn"];
+	$price = $_POST["price"];
+	$stock = $_POST["in"];
+	
+	# 勝手にidは設定されるので書かない
+	$sql = "INSERT INTO books(title, author, salesDate, isbn, price, stock, deleteCheck) ";
+	$sql .= "VALUES('{$title}', '{$author}', '{$salesDate}', '{$isbn}', '{$price}', '{$stock}', '0')";
+	$con->query($sql);
+}
+
+if (isset($_POST["add"]) && $_POST["add"] == "ok") {
+	addData($mysqli);	
+
+	//SESSIONの「success」に「新商品の追加が完了しました」と設定する。
+	$_SESSION["success"] = "新商品の追加が完了しました";
+	//「header」関数を使用して在庫一覧画面へ遷移する。
+	header('Location: zaiko_ichiran.php');
+	exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -72,12 +83,12 @@ function getId($con){
 	<div id="menu">
 		<nav>
 			<ul>
-				<li><a href="zaiko_ichiran.php?page=1">追加書籍</a></li>
+				<li><a href="zaiko_ichiran.php?page=1">書籍一覧</a></li>
 			</ul>
 		</nav>
 	</div>
 
-	<form action="zaiko_ichiran.php" method="post">
+	<form action="new_product.php" method="post">
 		<div id="pagebody">
 			<!-- エラーメッセージ -->
 			<div id="error">
@@ -108,29 +119,22 @@ function getId($con){
 						</tr>
 					</thead>
 					<?php 
-					/*
-					 * ⑮POSTの「books」から一つずつ値を取り出し、変数に保存する。
-					 */
-					// foreach (/* ⑮の処理を書く */ $_POST["books"] as $book) {
-					// 	// ⑯「getId」関数を呼び出し、変数に戻り値を入れる。その際引数に⑮の処理で取得した値と⑥のDBの接続情報を渡す。
-						$extract = getId($mysqli);
+					// ⑯「getId」関数を呼び出し、変数に戻り値を入れる。その際引数に⑥のDBの接続情報を渡す。
+					$extract = getId($mysqli);
 					?>
-						<input type="hidden" value="<?php echo $extract["id"]; ?>" name="books[]">
-						<tr>
-							<td><?PHP echo $extract['id'] + 1; ?></td>
-							<td><input type='text' name='isbn' size='13' maxlength='13' required></td>
-							<td><input type='text' name='title' size='20' maxlength='40' required></td>
-							<td><input type='text' name='author' size='15' maxlength='30' required></td>
-							<td><input type='date' name='salesDate' required></td>
-							<td><input type='text' name='price' size='8' maxlength='11' required></td>
-							<td>0</td>
-							<td><input type='text' name='in[]' size='3' maxlength='11' required></td>
-						</tr>
-					<?php
-					// }
-					?>
+					<input type="hidden" value="<?php echo $extract["id"]; ?>" name="books[]">
+					<tr>
+						<td><?php echo $extract['id'] + 1; ?></td>
+						<td><input type='text' name='isbn' size='13' maxlength='13' required></td>
+						<td><input type='text' name='title' size='20' maxlength='40' required></td>
+						<td><input type='text' name='author' size='15' maxlength='30' required></td>
+						<td><input type='date' name='salesDate' required></td>
+						<td><input type='text' name='price' size='8' maxlength='11' required></td>
+						<td>0</td><!-- <td><input type='text' name='stock' size='8' maxlength='11' required></td> -->
+						<td><input type='text' name='in' size='3' maxlength='11' required></td>
+					</tr>
 				</table>
-				<button type="submit" id="kakutei" formmethod="POST" name="decision" value="1">確定</button>
+				<button type="submit" id="kakutei" formmethod="POST" name="add" value="ok">確定</button>
 			</div>
 		</div>
 	</form>
