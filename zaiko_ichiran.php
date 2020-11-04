@@ -38,7 +38,7 @@ if($mysqli->connect_error){
 
 	//⑦書籍テーブルから書籍情報を取得するSQLを実行する。また実行結果を変数に保存する
 	//$sql = "SELECT * FROM books";
-	$sql = "SELECT * FROM books  where DeleteCheck = 0";
+	$sql = "SELECT * FROM books  where deleteCheck = 0";
 	$result = $mysqli->query($sql);
 }		
 ?>
