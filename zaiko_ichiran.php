@@ -37,17 +37,55 @@ if($mysqli->connect_error){
 	$mysqli->set_charset('utf8');
 
 	//⑦書籍テーブルから書籍情報を取得するSQLを実行する。また実行結果を変数に保存する
-	//$sql = "SELECT * FROM books";
-	$sql = "SELECT * FROM books  where deleteCheck = 0";
+
+	if (isset($_POST["sortbyday"])) {
+		if ($_POST["sortbyday"] == "ASC") {
+			$sql = "SELECT * FROM books  where deleteCheck = 0 ORDER BY salesDate ASC";
+			
+			//document.getElementById('sortbyday').textcontext = '▼';
+			
+			
+		}else{
+			$sql = "SELECT * FROM books  where deleteCheck = 0 ORDER BY salesDate DESC";
+		}
+		
+	}elseif (isset($_POST["sortbykingaku"])) {
+		if ($_POST["sortbykingaku"] == "ACS") {
+			$sql = "SELECT * FROM books  where deleteCheck = 0 ORDER BY price ASC";
+		}else{
+			$sql = "SELECT * FROM books  where deleteCheck = 0 ORDER BY price DESC";
+		}
+		
+	}elseif (isset($_POST["sortbyzaikosuu"])) {
+		if ($_POST["sortbyzaikosuu"] == "ASC") {
+			$sql = "SELECT * FROM books  where deleteCheck = 0 ORDER BY stock ASC";
+		}else{
+			$sql = "SELECT * FROM books  where deleteCheck = 0 ORDER BY stock ASC";
+		}		
+	}else{
+		$sql = "SELECT * FROM books  where deleteCheck = 0";
+	}
 	$result = $mysqli->query($sql);
+	
 }		
+
 ?>
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
 	<meta charset="UTF-8">
 	<title>書籍一覧</title>
 	<link rel="stylesheet" href="css/ichiran.css" type="text/css" />
+	<style>
+		.sort{
+			background:#7fffbf;
+			width:150px;
+			height:40px;
+			outline:none;
+			border-style:none;
+		}
+	</style>
 </head>
 <body>
 	<div id="header">
@@ -99,9 +137,18 @@ if($mysqli->connect_error){
 							<th id="id">ID</th>
 							<th id="book_name">書籍名</th>
 							<th id="author">著者名</th>
-							<th id="salesDate">発売日</th>
-							<th id="itemPrice">金額</th>
-							<th id="stock">在庫数</th>
+							<th id="salesDate">発売日
+								<button type="submit"  id="sort" formmethod="POST" name="sortbyday" value="ASC">▲</button>
+								
+							</th>
+							<th id="itemPrice">金額
+								<button type="submit"  id="sort" formmethod="POST" name="sortbykingaku" value="ASC">▲</button>
+							
+							</th>								
+							<th id="stock">在庫数
+								<button type="submit"  id="sort" formmethod="POST" name="sortbyzaikosuu" value="ASC">▲</button>
+							
+							</th>
 						</tr>
 					</thead>
 					<tbody>
