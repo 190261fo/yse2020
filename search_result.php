@@ -39,13 +39,17 @@ if (!isset($_POST["books"])) {
 	exit ;
 }
 
-function getId($id,$con){
-	/* 
-	 * ⑪書籍を取得するSQLを作成する実行する。
-	 * その際にWHERE句でメソッドの引数の$idに一致する書籍のみ取得する。
-	 * SQLの実行結果を変数に保存する。
-	*/
-	$sql = "SELECT * FROM books WHERE id={$id}";
+function getId($con){
+    $search_list = array();
+    if (isset($_POST['search']) && $_POST['search'] == "ok") {
+        if (!$_POST['keyword'] == "") {
+            $search_list[] = "title LIKE %{$_POST['keyword']}% OR author LIKE %{$_POST['keyword']}%";
+        }
+    }
+
+
+
+	$sql = "SELECT * FROM books WHERE ".implode("AND ", $search_list);
 	$result = $con->query($sql);
 
 	//⑫実行した結果から1レコード取得し、returnで値を返す。
@@ -118,12 +122,12 @@ function getId($id,$con){
 						<input type="hidden" value="<?php echo $extract["id"]; ?>" name="books[]">
 						<tr>
                             <td><input type='checkbox' name='' value=''></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
+							<td><?php echo $extract["id"]; ?></td>
+							<td><?php echo $extract["title"]; ?></td>
+							<td><?php echo $extract["author"]; ?></td>
+							<td><?php echo $extract["salesDate"]; ?></td>
+							<td><?php echo $extract["price"]; ?></td>
+							<td><?php echo $extract["stock"]; ?></td>
 						</tr>
 					<?php
 					}

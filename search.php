@@ -123,43 +123,43 @@ if (isset($_POST["add"]) && $_POST["add"] == "ok") {
 					<tr>
                         <td><input type='text' name='keyword' size='13' maxlength='13' required></td>
                         <td>
-                            <select name="example" required>
+                            <select name="years" required>
 								<option value=""></option>
-                                <option value="">1970年代</option>
-                                <option value="">1980年代</option>
-                                <option value="">1990年代</option>
-                                <option value="">2000年代</option>
-                                <option value="">2010年代</option>
-                                <option value="">2020年代</option>
+                                <option value="%197%">1970年代</option>
+                                <option value="%198%">1980年代</option>
+                                <option value="%199%">1990年代</option>
+                                <option value="%200%">2000年代</option>
+                                <option value="%201%">2010年代</option>
+                                <option value="%202%">2020年代</option>
                             </select>
                         </td>
 						<td>
                             <select name="price" required>
 								<option value=""></option>
-                                <option value="">400円代</option>
-                                <option value="">500円代</option>
-                                <option value="">600円代</option>
-                                <option value="">700円代</option>
-                                <option value="">800円代</option>
-                                <option value="">900円代</option>
-								<option value="">1000円代</option>
-								<option value="">2000円代</option>
+                                <option value="400">400円代</option>
+                                <option value="500">500円代</option>
+                                <option value="600">600円代</option>
+                                <option value="700">700円代</option>
+                                <option value="800">800円代</option>
+                                <option value="900">900円代</option>
+								<option value="1000">1000円代</option>
+								<option value="2000">2000円代</option>
                             </select>
                         </td>
 						<td>
                             <select name="stock" required>
 								<option value=""></option>
-                                <option value="">10冊未満</option>
-                                <option value="">20冊未満</option>
-                                <option value="">30冊未満</option>
-                                <option value="">40冊未満</option>
-                                <option value="">50冊未満</option>
-                                <option value="">50冊以上</option>
+                                <option value="9">10冊未満</option>
+                                <option value="19">20冊未満</option>
+                                <option value="29">30冊未満</option>
+                                <option value="39">40冊未満</option>
+                                <option value="49">50冊未満</option>
+                                <option value="50">50冊以上</option>
                             </select>
                         </td>
 					</tr>
 				</table>
-				<button type="submit" id="kakutei" formmethod="POST" name="add" value="ok">検索</button>
+				<button type="submit" id="kakutei" formmethod="POST" name="search" value="ok">検索</button>
 			</div>
 		</div>
 	</form>
