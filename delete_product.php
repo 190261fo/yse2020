@@ -72,6 +72,16 @@ if(isset($_POST["delete"]) && $_POST["delete"] == "ok"){
 <div id="header">
 	<h1>商品削除確認</h1>
 </div>
+
+<!-- メニュー -->
+<div id="menu">
+	<nav>
+		<ul>
+			<li><a href="zaiko_ichiran.php?page=1">書籍一覧</a></li>
+		</ul>
+	</nav>
+</div>
+
 <form action="delete_product.php" method="post" id="test">
 	<div id="pagebody">
 		<div id="center">

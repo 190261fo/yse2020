@@ -40,17 +40,33 @@ if (!isset($_POST["books"])) {
 }
 
 function getId($con){
-    $search_list = array();
+	$search_list = array();
+	
+	# 検索のボタンが押されたら
     if (isset($_POST['search']) && $_POST['search'] == "ok") {
+		# キーワード(書籍名or著者名)
         if (!$_POST['keyword'] == "") {
-            $search_list[] = "title LIKE %{$_POST['keyword']}% OR author LIKE %{$_POST['keyword']}%";
-        }
-    }
+            $search_list[] = "title LIKE '%{$_POST['keyword']}%' OR author LIKE '%{$_POST['keyword']}%'";
+		}
+		# 発売年代
+		if ($_POST['years']) {
+            $search_list[] = "salesDate LIKE '%{$_POST['years']}%'";
+		}
+		# 金額
+		if ($_POST['price']) {
+            $search_list[] = "price LIKE '%{$_POST['price']}%'";
+		}
+		# 在庫数
+		if ($_POST['stock']) {
+            $search_list[] = "stock{$_POST['stock']}";
+		}
+	}
+	$search_list[] = "deleteCheck='0'"; # 削除されてないデータのみ
 
-
-
-	$sql = "SELECT * FROM books WHERE ".implode("AND ", $search_list);
+	# リスト内の項目を AND で区切ってつなげる
+	$sql = "SELECT * FROM books WHERE ".implode(" AND ", $search_list);
 	$result = $con->query($sql);
+	var_dump($sql);
 
 	//⑫実行した結果から1レコード取得し、returnで値を返す。
 	if($result){
@@ -117,7 +133,7 @@ function getId($con){
     				// foreach(/* ⑮の処理を書く */){
 					foreach ($_POST["books"] as $book) {
 						// ⑯「getId」関数を呼び出し、変数に戻り値を入れる。その際引数に⑮の処理で取得した値と⑥のDBの接続情報を渡す。
-						$extract = getId($book, $mysqli);
+						$extract = getId($mysqli);
 					?>
 						<input type="hidden" value="<?php echo $extract["id"]; ?>" name="books[]">
 						<tr>
@@ -133,8 +149,8 @@ function getId($con){
 					}
 					?>
 				</table>
-				<button type="submit" id="kakutei" formmethod="POST" name="decision" value="1" formaction="zaiko_ichiran.php">入荷</button>
-                <button type="submit" id="kakutei" formmethod="POST" name="decision" value="2" formaction="zaiko_ichiran.php">出荷</button>
+				<button type="submit" id="kakutei" formmethod="POST" name="decision" value="1" formaction="nyuka.php">入荷</button>
+                <button type="submit" id="kakutei" formmethod="POST" name="decision" value="2" formaction="syukka.php">出荷</button>
 			</div>
 		</div>
 	</form>

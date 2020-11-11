@@ -41,31 +41,6 @@ function getId($con){
 		return $result->fetch_assoc();
 	}
 }
-
-function addData($con){
-	// 入力値を変数に
-	$title = $_POST["title"];
-	$author = $_POST["author"];
-	$salesDate = date('Y年m月d日', strtotime($_POST["salesDate"]));
-	$isbn = $_POST["isbn"];
-	$price = $_POST["price"];
-	$stock = $_POST["in"];
-	
-	# 勝手にidは設定されるので書かない
-	$sql = "INSERT INTO books(title, author, salesDate, isbn, price, stock, deleteCheck) ";
-	$sql .= "VALUES('{$title}', '{$author}', '{$salesDate}', '{$isbn}', '{$price}', '{$stock}', '0')";
-	$con->query($sql);
-}
-
-if (isset($_POST["add"]) && $_POST["add"] == "ok") {
-	addData($mysqli);	
-
-	//SESSIONの「success」に「新商品の追加が完了しました」と設定する。
-	$_SESSION["success"] = "新商品の追加が完了しました";
-	//「header」関数を使用して在庫一覧画面へ遷移する。
-	header('Location: zaiko_ichiran.php');
-	exit;
-}
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -109,10 +84,10 @@ if (isset($_POST["add"]) && $_POST["add"] == "ok") {
 				<table>
 					<thead>
 						<tr>
-							<th id="id">キーワード</th>
-							<th id="isbn">発売年代</th>
-							<th id="book_name">金額</th>
-							<th id="author">在庫数</th>
+							<th id="keyword">キーワード</th>
+							<th id="years">発売年代</th>
+							<th id="price">金額</th>
+							<th id="stock">在庫数</th>
 						</tr>
 					</thead>
 					<?php 
@@ -121,40 +96,45 @@ if (isset($_POST["add"]) && $_POST["add"] == "ok") {
 					?>
 					<input type="hidden" value="<?php echo $extract["id"]; ?>" name="books[]">
 					<tr>
-                        <td><input type='text' name='keyword' size='13' maxlength='13' required></td>
+						<!-- <td><input type='text' name='keyword' size='13' maxlength='13' required></td> -->
+						<td><input type='text' name='keyword' size='13' maxlength='13'></td>
+
                         <td>
-                            <select name="years" required>
+							<!-- <select name="years" required> -->
+							<select name="years">
 								<option value=""></option>
-                                <option value="%197%">1970年代</option>
-                                <option value="%198%">1980年代</option>
-                                <option value="%199%">1990年代</option>
-                                <option value="%200%">2000年代</option>
-                                <option value="%201%">2010年代</option>
-                                <option value="%202%">2020年代</option>
+                                <option value="197_">1970年代</option>
+                                <option value="198_">1980年代</option>
+                                <option value="199_">1990年代</option>
+                                <option value="200_">2000年代</option>
+                                <option value="201_">2010年代</option>
+                                <option value="202_">2020年代</option>
                             </select>
                         </td>
 						<td>
-                            <select name="price" required>
+                            <!-- <select name="price" required> -->
+							<select name="price">
 								<option value=""></option>
-                                <option value="400">400円代</option>
-                                <option value="500">500円代</option>
-                                <option value="600">600円代</option>
-                                <option value="700">700円代</option>
-                                <option value="800">800円代</option>
-                                <option value="900">900円代</option>
-								<option value="1000">1000円代</option>
-								<option value="2000">2000円代</option>
+                                <option value="4__">400円代</option>
+                                <option value="5__">500円代</option>
+                                <option value="6__">600円代</option>
+                                <option value="7__">700円代</option>
+                                <option value="8__">800円代</option>
+                                <option value="9__">900円代</option>
+								<option value="1___">1000円代</option>
+								<option value="2___">2000円代</option>
                             </select>
                         </td>
 						<td>
-                            <select name="stock" required>
+                            <!-- <select name="stock" required> -->
+							<select name="stock">
 								<option value=""></option>
-                                <option value="9">10冊未満</option>
-                                <option value="19">20冊未満</option>
-                                <option value="29">30冊未満</option>
-                                <option value="39">40冊未満</option>
-                                <option value="49">50冊未満</option>
-                                <option value="50">50冊以上</option>
+                                <option value="<10">10冊未満</option>
+                                <option value="<20">20冊未満</option>
+                                <option value="<30">30冊未満</option>
+                                <option value="<40">40冊未満</option>
+                                <option value="<50">50冊未満</option>
+                                <option value=">=50">50冊以上</option>
                             </select>
                         </td>
 					</tr>
