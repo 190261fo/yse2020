@@ -35,39 +35,28 @@ if($mysqli->connect_error){
 }else{
 	//⑥データベースで使用する文字コードを「UTF8」にする
 	$mysqli->set_charset('utf8');
-
 	//⑦書籍テーブルから書籍情報を取得するSQLを実行する。また実行結果を変数に保存する
-
-	if (isset($_POST["sortbyday"])) {
-		if ($_POST["sortbyday"] == "ASC") {
-			$sql = "SELECT * FROM books  where deleteCheck = 0 ORDER BY salesDate ASC";
-			
-			//document.getElementById('sortbyday').textcontext = '▼';
-			
-			
-		}else{
-			$sql = "SELECT * FROM books  where deleteCheck = 0 ORDER BY salesDate DESC";
-		}
-		
+	if (isset($_POST["sortbyday"])) {	
+		$sql = "SELECT * FROM books  where deleteCheck = 0 ORDER BY salesDate {$_POST["sortbyday"]}";
+		$_POST["sortbyday"] = setOrderByPostName($_POST["sortbyday"]);		
 	}elseif (isset($_POST["sortbykingaku"])) {
-		if ($_POST["sortbykingaku"] == "ACS") {
-			$sql = "SELECT * FROM books  where deleteCheck = 0 ORDER BY price ASC";
-		}else{
-			$sql = "SELECT * FROM books  where deleteCheck = 0 ORDER BY price DESC";
-		}
-		
+		$sql = "SELECT * FROM books  where deleteCheck = 0 ORDER BY price {$_POST["sortbykingaku"]}";
+		$_POST["sortbykingaku"] = setOrderByPostName($_POST["sortbykingaku"]);		
 	}elseif (isset($_POST["sortbyzaikosuu"])) {
-		if ($_POST["sortbyzaikosuu"] == "ASC") {
-			$sql = "SELECT * FROM books  where deleteCheck = 0 ORDER BY stock ASC";
-		}else{
-			$sql = "SELECT * FROM books  where deleteCheck = 0 ORDER BY stock ASC";
-		}		
+		$sql = "SELECT * FROM books  where deleteCheck = 0 ORDER BY stock {$_POST["sortbyzaikosuu"]}";
+		$_POST["sortbyzaikosuu"] = setOrderByPostName($_POST["sortbyzaikosuu"]);	
 	}else{
 		$sql = "SELECT * FROM books  where deleteCheck = 0";
 	}
-	$result = $mysqli->query($sql);
-	
-}		
+	$result = $mysqli->query($sql);	
+}
+function setOrderByPostName($postName){
+	if ($postName == "ASC") {
+		return "DESC";
+	}else{
+		return "ASC";
+	}	
+}
 
 ?>
 
@@ -77,15 +66,6 @@ if($mysqli->connect_error){
 	<meta charset="UTF-8">
 	<title>書籍一覧</title>
 	<link rel="stylesheet" href="css/ichiran.css" type="text/css" />
-	<style>
-		.sort{
-			background:#7fffbf;
-			width:150px;
-			height:40px;
-			outline:none;
-			border-style:none;
-		}
-	</style>
 </head>
 <body>
 	<div id="header">
@@ -138,16 +118,17 @@ if($mysqli->connect_error){
 							<th id="book_name">書籍名</th>
 							<th id="author">著者名</th>
 							<th id="salesDate">発売日
-								<button type="submit"  id="sort" formmethod="POST" name="sortbyday" value="ASC">▲</button>
-								
+								<button type="submit"  id="sort" formmethod="POST" name="sortbyday" 
+									value="<?php if(isset($_POST['sortbyday'])):?><?=$_POST['sortbyday']?><?php else: ?><?='ASC'?><?php endif ?>"><?php  if (isset($_POST['sortbyday']) && $_POST['sortbyday'] == 'DESC'): ?> <?= '▲' ?><?php  elseif (isset($_POST['sortbyday']) && $_POST['sortbyday'] == 'ASC'): ?> <?= '▼' ?><?php else: ?><?= '▼' ?><?php endif ?></button>
 							</th>
-							<th id="itemPrice">金額
-								<button type="submit"  id="sort" formmethod="POST" name="sortbykingaku" value="ASC">▲</button>
 							
+							<th id="itemPrice">金額
+								<button type="submit"  id="sort" formmethod="POST" name="sortbykingaku" 
+									value="<?php if(isset($_POST['sortbykingaku'])):?><?=$_POST['sortbykingaku']?><?php else: ?><?='ASC'?><?php endif ?>"><?php  if (isset($_POST['sortbykingaku']) && $_POST['sortbykingaku'] == 'DESC'): ?> <?= '▲' ?><?php  elseif (isset($_POST['sortbykingaku']) && $_POST['sortbykingaku'] == 'ASC'): ?> <?= '▼' ?><?php else: ?><?= '▼' ?><?php endif ?></button>							
 							</th>								
 							<th id="stock">在庫数
-								<button type="submit"  id="sort" formmethod="POST" name="sortbyzaikosuu" value="ASC">▲</button>
-							
+								<button type="submit"  id="sort" formmethod="POST" name="sortbyzaikosuu" 
+									value="<?php if(isset($_POST['sortbyzaikosuu'])):?><?=$_POST['sortbyzaikosuu']?><?php else: ?><?='ASC'?><?php endif ?>"><?php  if (isset($_POST['sortbyzaikosuu']) && $_POST['sortbyzaikosuu'] == 'DESC'): ?> <?= '▲' ?><?php  elseif (isset($_POST['sortbyzaikosuu']) && $_POST['sortbyzaikosuu'] == 'ASC'): ?> <?= '▼' ?><?php else: ?><?= '▼' ?><?php endif ?></button>						
 							</th>
 						</tr>
 					</thead>
