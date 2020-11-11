@@ -39,7 +39,7 @@ if (!isset($_POST["books"])) {
 	exit ;
 }
 
-function getId($con){
+function getResult($con){
 	$search_list = array();
 	
 	# 検索のボタンが押されたら
@@ -66,12 +66,7 @@ function getId($con){
 	# リスト内の項目を AND で区切ってつなげる
 	$sql = "SELECT * FROM books WHERE ".implode(" AND ", $search_list);
 	$result = $con->query($sql);
-	var_dump($sql);
-
-	//⑫実行した結果から1レコード取得し、returnで値を返す。
-	if($result){
-		return $result->fetch_assoc();
-	}
+	return $result;
 }
 
 ?>
@@ -93,6 +88,7 @@ function getId($con){
 		<nav>
 			<ul>
 				<li><a href="zaiko_ichiran.php?page=1">書籍一覧</a></li>
+				<li><a href="search.php?page=1">商品検索</a></li>
 			</ul>
 		</nav>
 	</div>
@@ -131,13 +127,14 @@ function getId($con){
 					 * ⑮POSTの「books」から一つずつ値を取り出し、変数に保存する。
 					*/
     				// foreach(/* ⑮の処理を書く */){
-					foreach ($_POST["books"] as $book) {
+					foreach ($_POST["books"] as $books) {
 						// ⑯「getId」関数を呼び出し、変数に戻り値を入れる。その際引数に⑮の処理で取得した値と⑥のDBの接続情報を渡す。
-						$extract = getId($mysqli);
+						$result = getResult($mysqli);
+						while($extract = $result->fetch_assoc()){
 					?>
-						<input type="hidden" value="<?php echo $extract["id"]; ?>" name="books[]">
 						<tr>
-                            <td><input type='checkbox' name='' value=''></td>
+							<!-- チェックしたものだけ入荷or出荷ページへ -->
+                            <td><input type='checkbox' name='books[]' value=<?php echo $extract['id']; ?>></td>
 							<td><?php echo $extract["id"]; ?></td>
 							<td><?php echo $extract["title"]; ?></td>
 							<td><?php echo $extract["author"]; ?></td>
@@ -146,6 +143,7 @@ function getId($con){
 							<td><?php echo $extract["stock"]; ?></td>
 						</tr>
 					<?php
+						}
 					}
 					?>
 				</table>
