@@ -45,6 +45,9 @@ if($mysqli->connect_error){
 	}elseif (isset($_POST["sortbyzaikosuu"])) {
 		$sql = "SELECT * FROM books  where deleteCheck = 0 ORDER BY stock {$_POST["sortbyzaikosuu"]}";
 		$_POST["sortbyzaikosuu"] = setOrderByPostName($_POST["sortbyzaikosuu"]);	
+	}elseif (isset($_POST["id"])) {
+		$sql = "SELECT * FROM books  where deleteCheck = 0 ORDER BY id {$_POST["id"]}";
+		$_POST["id"] = setOrderByPostName($_POST["id"]);	
 	}else{
 		$sql = "SELECT * FROM books  where deleteCheck = 0";
 	}
@@ -114,7 +117,10 @@ function setOrderByPostName($postName){
 					<thead>
 						<tr>
 							<th id="check"></th>
-							<th id="id">ID</th>
+							<th id="id">ID
+							<button type="submit"  id="sort" formmethod="POST" name="id" 
+									value="<?php if(isset($_POST['id'])):?><?=$_POST['id']?><?php else: ?><?='ASC'?><?php endif ?>"><?php  if (isset($_POST['id']) && $_POST['id'] == 'DESC'): ?> <?= '▲' ?><?php  elseif (isset($_POST['id']) && $_POST['id'] == 'ASC'): ?> <?= '▼' ?><?php else: ?><?= '▼' ?><?php endif ?></button>
+							</th>
 							<th id="book_name">書籍名</th>
 							<th id="author">著者名</th>
 							<th id="salesDate">発売日
