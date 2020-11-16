@@ -75,12 +75,8 @@ if (isset($_SESSION["error2"])) {
 <head>
 	<meta charset="UTF-8">
 	<title>ログイン</title>
-	<link rel="stylesheet" href="css/login.css" type="text/css" />
-	<style>
-		#msg{
-			color: #ff7f7f;
-		}
-	</style>
+	<link rel="stylesheet" href="css/login.css?20201116" type="text/css" />
+	
 </head>
 
 <body id="login">
