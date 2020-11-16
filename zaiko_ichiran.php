@@ -75,7 +75,7 @@ function setContextBtn($name){
 			return "▼";
 		}
 	}else{		
-		return "▼";
+		return "▲";
 	}
 }
 
