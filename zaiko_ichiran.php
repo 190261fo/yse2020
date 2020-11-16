@@ -60,6 +60,25 @@ function setOrderByPostName($postName){
 		return "ASC";
 	}	
 }
+function setValueBtn($name){
+	if(isset($_POST["{$name}"])){
+		return $_POST["{$name}"];
+	}else{		
+		return "DESC";
+	}
+}
+function setContextBtn($name){
+	if(isset($_POST["{$name}"])){
+		if($_POST["{$name}"] == "DESC"){
+			return "▲";
+		}else{
+			return "▼";
+		}
+	}else{		
+		return "▼";
+	}
+}
+
 
 ?>
 
@@ -118,23 +137,18 @@ function setOrderByPostName($postName){
 						<tr>
 							<th id="check"></th>
 							<th id="id">ID
-							<button type="submit"  id="sort" formmethod="POST" name="id" 
-									value="<?php if(isset($_POST['id'])):?><?=$_POST['id']?><?php else: ?><?='ASC'?><?php endif ?>"><?php  if (isset($_POST['id']) && $_POST['id'] == 'DESC'): ?> <?= '▲' ?><?php  elseif (isset($_POST['id']) && $_POST['id'] == 'ASC'): ?> <?= '▼' ?><?php else: ?><?= '▼' ?><?php endif ?></button>
+								<button type="submit"  id="sort" formmethod="POST" name="id" value="<?php echo setValueBtn('id'); ?>"><?php  echo setContextBtn('id');?></button>
 							</th>
 							<th id="book_name">書籍名</th>
 							<th id="author">著者名</th>
 							<th id="salesDate">発売日
-								<button type="submit"  id="sort" formmethod="POST" name="sortbyday" 
-									value="<?php if(isset($_POST['sortbyday'])):?><?=$_POST['sortbyday']?><?php else: ?><?='ASC'?><?php endif ?>"><?php  if (isset($_POST['sortbyday']) && $_POST['sortbyday'] == 'DESC'): ?> <?= '▲' ?><?php  elseif (isset($_POST['sortbyday']) && $_POST['sortbyday'] == 'ASC'): ?> <?= '▼' ?><?php else: ?><?= '▼' ?><?php endif ?></button>
+								<button type="submit"  id="sort" formmethod="POST" name="sortbyday" value="<?php echo setValueBtn('sortbyday'); ?>"><?php  echo setContextBtn('sortbyday');?></button>
 							</th>
-							
 							<th id="itemPrice">金額
-								<button type="submit"  id="sort" formmethod="POST" name="sortbykingaku" 
-									value="<?php if(isset($_POST['sortbykingaku'])):?><?=$_POST['sortbykingaku']?><?php else: ?><?='ASC'?><?php endif ?>"><?php  if (isset($_POST['sortbykingaku']) && $_POST['sortbykingaku'] == 'DESC'): ?> <?= '▲' ?><?php  elseif (isset($_POST['sortbykingaku']) && $_POST['sortbykingaku'] == 'ASC'): ?> <?= '▼' ?><?php else: ?><?= '▼' ?><?php endif ?></button>							
+								<button type="submit"  id="sort" formmethod="POST" name="sortbykingaku" value="<?php echo setValueBtn('sortbykingaku'); ?>"><?php  echo setContextBtn('sortbykingaku');?></button>
 							</th>								
 							<th id="stock">在庫数
-								<button type="submit"  id="sort" formmethod="POST" name="sortbyzaikosuu" 
-									value="<?php if(isset($_POST['sortbyzaikosuu'])):?><?=$_POST['sortbyzaikosuu']?><?php else: ?><?='ASC'?><?php endif ?>"><?php  if (isset($_POST['sortbyzaikosuu']) && $_POST['sortbyzaikosuu'] == 'DESC'): ?> <?= '▲' ?><?php  elseif (isset($_POST['sortbyzaikosuu']) && $_POST['sortbyzaikosuu'] == 'ASC'): ?> <?= '▼' ?><?php else: ?><?= '▼' ?><?php endif ?></button>						
+								<button type="submit"  id="sort" formmethod="POST" name="sortbyzaikosuu" value="<?php echo setValueBtn('sortbyzaikosuu'); ?>"><?php  echo setContextBtn('sortbyzaikosuu');?></button>
 							</th>
 						</tr>
 					</thead>
