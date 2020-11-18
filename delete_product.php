@@ -113,7 +113,15 @@ if(isset($_POST["delete"]) && $_POST["delete"] == "ok"){
 					?>
 				</tbody>
 			</table>
-			<button type="submit" id="kakutei" formmethod="POST" name="delete" value="ok">確定</button>
+			<div id="kakunin">
+				<br>
+					<p　id="delete">
+						上記の書籍を削除します。<br>
+						よろしいですか？
+					</p>
+					<button type="submit" id="message" formmethod="POST" name="delete"" value="ok">はい</button>
+					<button type="submit" id="message" formaction="zaiko_ichiran.php">いいえ</button>
+			</div>
 		</div>
 	</div>
 </form>
