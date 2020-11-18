@@ -41,27 +41,35 @@ if (!isset($_POST["books"])) {
 
 function getResult($con){
 	$search_list = array();
+	$search_msg = array();
 	
 	# 検索のボタンが押されたら
     if (isset($_POST['search']) && $_POST['search'] == "ok") {
 		# キーワード(書籍名or著者名)
         if (!$_POST['keyword'] == "") {
-            $search_list[] = "title LIKE '%{$_POST['keyword']}%' OR author LIKE '%{$_POST['keyword']}%'";
+			$search_list[] = "(title LIKE '%{$_POST['keyword']}%' OR author LIKE '%{$_POST['keyword']}%')";
+			$search_msg[] = "キーワード：{$_POST['keyword']}";
 		}
 		# 発売年代
 		if ($_POST['years']) {
-            $search_list[] = "salesDate LIKE '%{$_POST['years']}%'";
+			$search_list[] = "salesDate LIKE '%{$_POST['years']}%'";
+			$search_msg[] = "発売年代：{$_POST['years']}"; # プルダウンの表示名を持ってきたい。やり方検索中…
 		}
 		# 金額
 		if ($_POST['price']) {
-            $search_list[] = "price LIKE '%{$_POST['price']}%'";
+			$search_list[] = "price LIKE '%{$_POST['price']}%'";
+			$search_msg[] = "金額：{$_POST['price']}";
 		}
 		# 在庫数
 		if ($_POST['stock']) {
-            $search_list[] = "stock{$_POST['stock']}";
+			$search_list[] = "stock{$_POST['stock']}";
+			$search_msg[] = "在庫数：{$_POST['stock']}";
 		}
 	}
 	$search_list[] = "deleteCheck='0'"; # 削除されてないデータのみ
+
+	$msg = implode(" , ", $search_msg);
+	echo "検索項目 【 {$msg} 】";
 
 	# リスト内の項目を AND で区切ってつなげる
 	$sql = "SELECT * FROM books WHERE ".implode(" AND ", $search_list);
