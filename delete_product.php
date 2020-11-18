@@ -115,7 +115,7 @@ if(isset($_POST["delete"]) && $_POST["delete"] == "ok"){
 			</table>
 			<div id="kakunin">
 				<br>
-					<p　id="delete">
+					<p>
 						上記の書籍を削除します。<br>
 						よろしいですか？
 					</p>
