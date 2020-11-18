@@ -125,13 +125,13 @@ if (isset($_POST["add"]) && $_POST["add"] == "ok") {
 					<input type="hidden" value="<?php echo $extract["id"]; ?>" name="books[]">
 					<tr>
 						<td><?php echo $extract['id'] + 1; ?></td>
-						<td><input type='text' name='isbn' size='13' maxlength='13' required></td>
+						<td><input type='text' name='isbn' size='13' maxlength='13' oninput="value = value.replace(/[^0-9]+/i,'');" required></td>
 						<td><input type='text' name='title' size='20' maxlength='40' required></td>
 						<td><input type='text' name='author' size='15' maxlength='30' required></td>
 						<td><input type='date' name='salesDate' required></td>
-						<td><input type='text' name='price' size='8' maxlength='11' required></td>
+						<td><input type='text' name='price' size='8' maxlength='11' oninput="value = value.replace(/[^0-9]+/i,'');" required></td>
 						<td>0</td><!-- <td><input type='text' name='stock' size='8' maxlength='11' required></td> -->
-						<td><input type='text' name='in' size='3' maxlength='11' required></td>
+						<td><input type='text' name='in' size='3' maxlength='11' oninput="value = value.replace(/[^0-9]+/i,'');" required></td>
 					</tr>
 				</table>
 				<button type="submit" id="kakutei" formmethod="POST" name="add" value="ok">確定</button>
