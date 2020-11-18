@@ -103,38 +103,38 @@ function getId($con){
 							<!-- <select name="years" required> -->
 							<select name="years">
 								<option value=""></option>
-                                <option value="197_">1970年代</option>
-                                <option value="198_">1980年代</option>
-                                <option value="199_">1990年代</option>
-                                <option value="200_">2000年代</option>
-                                <option value="201_">2010年代</option>
-                                <option value="202_">2020年代</option>
+                                <option value="197_, 1970年代">1970年代</option>
+                                <option value="198_, 1980年代">1980年代</option>
+                                <option value="199_, 1990年代">1990年代</option>
+                                <option value="200_, 2000年代">2000年代</option>
+                                <option value="201_, 2010年代">2010年代</option>
+                                <option value="202_, 2020年代">2020年代</option>
                             </select>
                         </td>
 						<td>
                             <!-- <select name="price" required> -->
 							<select name="price">
 								<option value=""></option>
-                                <option value="4__">400円代</option>
-                                <option value="5__">500円代</option>
-                                <option value="6__">600円代</option>
-                                <option value="7__">700円代</option>
-                                <option value="8__">800円代</option>
-                                <option value="9__">900円代</option>
-								<option value="1___">1000円代</option>
-								<option value="2___">2000円代</option>
+                                <option value="4__, 400円代">400円代</option>
+                                <option value="5__, 500円代">500円代</option>
+                                <option value="6__, 600円代">600円代</option>
+                                <option value="7__, 700円代">700円代</option>
+                                <option value="8__, 800円代">800円代</option>
+                                <option value="9__, 900円代">900円代</option>
+								<option value="1___, 1000円代">1000円代</option>
+								<option value="2___, 2000円代">2000円代</option>
                             </select>
                         </td>
 						<td>
                             <!-- <select name="stock" required> -->
 							<select name="stock">
 								<option value=""></option>
-                                <option value="<10">10冊未満</option>
-                                <option value="<20">20冊未満</option>
-                                <option value="<30">30冊未満</option>
-                                <option value="<40">40冊未満</option>
-                                <option value="<50">50冊未満</option>
-                                <option value=">=50">50冊以上</option>
+                                <option value="<10, 10冊未満">10冊未満</option>
+                                <option value="<20, 20冊未満">20冊未満</option>
+                                <option value="<30, 30冊未満">30冊未満</option>
+                                <option value="<40, 40冊未満">40冊未満</option>
+                                <option value="<50, 50冊未満">50冊未満</option>
+                                <option value=">=50, 50冊以上">50冊以上</option>
                             </select>
                         </td>
 					</tr>

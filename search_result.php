@@ -42,7 +42,11 @@ if (!isset($_POST["books"])) {
 function getResult($con){
 	$search_list = array();
 	$search_msg = array();
-	
+
+	$years_array = explode(', ', $_POST['years']);
+	$price_array = explode(', ', $_POST['price']);
+	$stock_array = explode(', ', $_POST['stock']);
+
 	# 検索のボタンが押されたら
     if (isset($_POST['search']) && $_POST['search'] == "ok") {
 		# キーワード(書籍名or著者名)
@@ -52,18 +56,18 @@ function getResult($con){
 		}
 		# 発売年代
 		if ($_POST['years']) {
-			$search_list[] = "salesDate LIKE '%{$_POST['years']}%'";
-			$search_msg[] = "発売年代：{$_POST['years']}"; # プルダウンの表示名を持ってきたい。やり方検索中…
+			$search_list[] = "salesDate LIKE '%{$years_array[0]}%'";
+			$search_msg[] = "発売年代：{$years_array[1]}";
 		}
 		# 金額
 		if ($_POST['price']) {
-			$search_list[] = "price LIKE '%{$_POST['price']}%'";
-			$search_msg[] = "金額：{$_POST['price']}";
+			$search_list[] = "price LIKE '%{$price_array[0]}%'";
+			$search_msg[] = "金額：{$price_array[1]}";
 		}
 		# 在庫数
 		if ($_POST['stock']) {
-			$search_list[] = "stock{$_POST['stock']}";
-			$search_msg[] = "在庫数：{$_POST['stock']}";
+			$search_list[] = "stock{$stock_array[0]}";
+			$search_msg[] = "在庫数：{$stock_array[1]}";
 		}
 	}
 	$search_list[] = "deleteCheck='0'"; # 削除されてないデータのみ
